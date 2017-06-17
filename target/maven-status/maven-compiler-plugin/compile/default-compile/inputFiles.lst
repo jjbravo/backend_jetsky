@@ -1,0 +1,15 @@
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/TipoClientes.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/REST/service/AlquileresREST.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/Planes.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/UsuariosFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/AbstractFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/REST/service/AppConfig.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/MotosAcuaticas.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/TipoClientesFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/PlanesFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/MotosAcuaticasFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/Roles.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/Usuarios.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/entities/Alquileres.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/AlquileresFacade.java
+/home/bratc/NetBeansProjects/JetSky/src/main/java/com/jetsky/jpa/sessions/RolesFacade.java
