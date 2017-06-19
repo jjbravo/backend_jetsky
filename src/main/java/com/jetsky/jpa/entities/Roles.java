@@ -58,11 +58,11 @@ public class Roles implements Serializable {
         this.id = id;
     }
 
-    public String getDescripcion() {
+    public String getRol() {
         return rol;
     }
 
-    public void setDescripcion(String rol) {
+    public void setRol(String rol) {
         this.rol = rol;
     }
 

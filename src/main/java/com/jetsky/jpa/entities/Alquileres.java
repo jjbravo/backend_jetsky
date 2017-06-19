@@ -7,6 +7,7 @@ package com.jetsky.jpa.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,7 +62,7 @@ public class Alquileres implements Serializable {
     @Column(name = "total_pagar")
     private BigDecimal totalPagar;
  
-     @Basic(optional = false)
+    @Basic(optional = true)
     @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
@@ -68,7 +70,7 @@ public class Alquileres implements Serializable {
     
      @JoinColumn(name="id_empleado",referencedColumnName="id")
      @ManyToOne(optional = false)
-     private Usuarios idUsuario;
+     private Usuarios idEmpleado;
      
     @JoinColumn(name="id_tipo_cliente",referencedColumnName="id")
      @ManyToOne(optional = false)
@@ -81,15 +83,18 @@ public class Alquileres implements Serializable {
     @JoinColumn(name="id_moto",referencedColumnName="id")
      @ManyToOne(optional = false)
      private MotosAcuaticas idMotoAcuatica;
-
-    public Alquileres(Integer id, String nombresCliente, String apellidosCliente, Integer cantidadPlan, BigDecimal totalPagar, Date fecha, Usuarios idUsuario, TipoClientes idTipoCliente, Planes idPlan, MotosAcuaticas idMotoAcuatica) {
+    
+    @Transient
+    SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+    
+    public Alquileres(Integer id, String nombresCliente, String apellidosCliente, Integer cantidadPlan, BigDecimal totalPagar, Date fecha, Usuarios idEmpleado, TipoClientes idTipoCliente, Planes idPlan, MotosAcuaticas idMotoAcuatica) {
         this.id = id;
         this.nombresCliente = nombresCliente;
         this.apellidosCliente = apellidosCliente;
         this.cantidadPlan = cantidadPlan;
         this.totalPagar = totalPagar;
         this.fecha = fecha;
-        this.idUsuario = idUsuario;
+        this.idEmpleado = idEmpleado;
         this.idTipoCliente = idTipoCliente;
         this.idPlan = idPlan;
         this.idMotoAcuatica = idMotoAcuatica;
@@ -142,20 +147,20 @@ public class Alquileres implements Serializable {
         this.totalPagar = totalPagar;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFecha() {
+        return date.format(fecha);
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFecha(String fecha) {
+        this.fecha = new Date();
     }
 
-    public Usuarios getIdUsuario() {
-        return idUsuario;
+    public Usuarios getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setIdUsuario(Usuarios idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdEmpleado(Usuarios idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public TipoClientes getIdTipoCliente() {

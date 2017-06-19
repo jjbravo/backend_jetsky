@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,7 +49,22 @@ public class Usuarios implements Serializable {
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "apellidos")
-    private String apellidos;  
+    private String apellidos; 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 80)
+    @Column(name = "direccion")
+    private String direccion; 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 12)
+    @Column(name = "telefono")
+    private String telefono;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 12)
+    @Column(name = "movil")
+    private String movil;  
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -72,7 +88,7 @@ public class Usuarios implements Serializable {
     @ManyToMany
     private List<Roles> rolesList;
     
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "idUsuario")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "idEmpleado")
     private List<Alquileres> alquileresList;
 
     public Usuarios() {
@@ -82,15 +98,13 @@ public class Usuarios implements Serializable {
         this.id = id;
     }
 
-    public Usuarios(Integer id, String nombres, String apellidos, String numDocumento, String email, String password, List<Roles> rolesList, List<Alquileres> alquileresList) {
+    public Usuarios(Integer id, String nombres, String apellidos, String numDocumento, String email, String password) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.numDocumento = numDocumento;
         this.email = email;
         this.password = password;
-        this.rolesList = rolesList;
-        this.alquileresList = alquileresList;
     }
 
     public Integer getId() {
@@ -149,6 +163,30 @@ public class Usuarios implements Serializable {
         this.activo = activo;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMovil() {
+        return movil;
+    }
+
+    public void setMovil(String movil) {
+        this.movil = movil;
+    }
+    @XmlTransient
     public List<Roles> getRolesList() {
         return rolesList;
     }
@@ -156,7 +194,7 @@ public class Usuarios implements Serializable {
     public void setRolesList(List<Roles> rolesList) {
         this.rolesList = rolesList;
     }
-
+    @XmlTransient
     public List<Alquileres> getAlquileresList() {
         return alquileresList;
     }
@@ -164,6 +202,5 @@ public class Usuarios implements Serializable {
     public void setAlquileresList(List<Alquileres> alquileresList) {
         this.alquileresList = alquileresList;
     }
-    
     
 }

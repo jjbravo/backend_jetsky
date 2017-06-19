@@ -7,9 +7,11 @@ package com.jetsky.REST.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jetsky.jpa.entities.Roles;
 import com.jetsky.jpa.entities.Usuarios;
 import com.jetsky.jpa.sessions.UsuariosFacade;
 import com.jetsky.rest.auth.DigestUtil;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,8 +56,15 @@ public class UsuariosREST {
         return usuariosEJB.findAll();
     }
     
+    @GET
+   // @RolesAllowed({"ADMIN"})
+    public List<Usuarios> findAllEmpleados() {
+        return usuariosEJB.findAllEmpleados();
+    }
+    
     @POST
    // @RolesAllowed({"ADMIN","EMPLEADO"})
+    @Path("administradores")
     public Response create(Usuarios usuario) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
@@ -64,8 +73,40 @@ public class UsuariosREST {
                 if (usuariosEJB.findUsuarioByNumDocumento(usuario.getNumDocumento()) == null) {
                     
                     usuario.setPassword(DigestUtil.cifrarPassword(usuario.getPassword()));
+                    usuario.setRolesList(new ArrayList<Roles>());
+                    usuario.getRolesList().add(new Roles("ADMIN"));
                     usuariosEJB.create(usuario);
-                    return Response.status(Response.Status.CREATED).entity(gson.toJson("El usuario se creó correctamente!")).build();
+                    return Response.status(Response.Status.CREATED).entity(gson.toJson("El usuario administrador se creó correctamente!")).build();
+
+                
+                } else {
+                    return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson("El número de documento ya se encuentra registrado!.")).build();
+                }
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson("El email ya se encuentra registrado!.")).build();
+            }
+        } catch (Exception e) {
+            Logger.getLogger(UsuariosREST.class.getName()).log(Level.SEVERE, null, e);
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson("Error al guardar el usuario!.")).build();
+        }
+    }
+    
+   
+   // @RolesAllowed({"ADMIN","EMPLEADO"})
+    @POST
+    @Path("empleados")
+    public Response createEmpleado(Usuarios usuario) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        try {
+            if (usuariosEJB.findUsuariosByEmail(usuario.getEmail()) == null) {
+                if (usuariosEJB.findUsuarioByNumDocumento(usuario.getNumDocumento()) == null) {
+                    
+                    usuario.setPassword(DigestUtil.cifrarPassword(usuario.getPassword()));
+                    usuario.setRolesList(new ArrayList<Roles>());
+                    usuario.getRolesList().add(new Roles("EMPLEADO"));
+                    usuariosEJB.create(usuario);
+                    return Response.status(Response.Status.CREATED).entity(gson.toJson("El usuario empleado se creó correctamente!")).build();
 
                 
                 } else {
