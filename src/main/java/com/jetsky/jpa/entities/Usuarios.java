@@ -186,7 +186,7 @@ public class Usuarios implements Serializable {
     public void setMovil(String movil) {
         this.movil = movil;
     }
-    @XmlTransient
+    //@XmlTransient
     public List<Roles> getRolesList() {
         return rolesList;
     }

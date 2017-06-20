@@ -46,9 +46,9 @@ public class UsuariosREST {
     private UsuariosFacade usuariosEJB;
    
     /**
-     * Obtiene todos los alquileres
+     * Obtiene todos los usuarios 
      *
-     * @return lista de alquileres
+     * @return lista de usuarios
      */
     @GET
    // @RolesAllowed({"ADMIN"})
@@ -56,12 +56,17 @@ public class UsuariosREST {
         return usuariosEJB.findAll();
     }
     
-    @GET
+     /**
+     * Obtiene todos los usuarios con rol empleado
+     *
+     * @return lista de usuarios
+     */
+     @GET
    // @RolesAllowed({"ADMIN"})
-    public List<Usuarios> findAllEmpleados() {
-        return usuariosEJB.findAllEmpleados();
+    @Path("empleados")
+    public List<Usuarios> findAllUsuariosByRol() {
+        return usuariosEJB.findAllUsuariosByRol("EMPLEADO");
     }
-    
     @POST
    // @RolesAllowed({"ADMIN","EMPLEADO"})
     @Path("administradores")
@@ -122,17 +127,22 @@ public class UsuariosREST {
     }
 
      /**
-     * Busca alquiler por su id
+     * Busca empleados por su id
      *
      * @param id
-     * @return alquiler
+     * @return empleados
      */
     @GET
     @Path("{id}")
     public Usuarios findById(@PathParam("id") Integer id) {
         return usuariosEJB.find(id);
     }
-    
+    /**
+     * Actualiza empleados por su id
+     *
+     * @param id
+     * @return empleados
+     */
     @PUT
     @Path("{id}")
     public void edit(@PathParam("id") Integer id, Usuarios usuarios){

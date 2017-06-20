@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jetsky.jpa.entities.Alquileres;
 import com.jetsky.jpa.sessions.AlquileresFacade;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,7 @@ public class AlquileresREST {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         try{
+            alquileres.setFecha(null);
             alquileresEJB.create(alquileres);
             return Response.status(Response.Status.CREATED).entity(gson.toJson("El alquiler se ha creado satisfactoriamente!")).build();
         }catch (Exception e) {

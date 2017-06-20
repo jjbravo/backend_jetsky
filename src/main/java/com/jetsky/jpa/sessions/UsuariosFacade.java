@@ -5,8 +5,11 @@
  */
 package com.jetsky.jpa.sessions;
 
+import com.jetsky.jpa.entities.Roles;
+import com.jetsky.jpa.entities.Roles_;
 import com.jetsky.jpa.entities.Usuarios;
 import com.jetsky.jpa.entities.Usuarios_;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -15,7 +18,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
 
 /**
  *
@@ -71,6 +76,29 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
             return (Usuarios) q.getSingleResult();
         } catch (NonUniqueResultException ex) {
             throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+    /**
+     * Busca usuario por rol
+     *
+     * @param rol
+     * @return Usuarios
+     */
+    public List<Usuarios> findAllUsuariosByRol(String rol) {
+
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Usuarios> cq = cb.createQuery(Usuarios.class);
+        Root<Roles> rootRoles = cq.from(Roles.class);
+        cq.where(cb.equal(rootRoles.get(Roles_.id), rol));
+        ListJoin<Roles,Usuarios> joinRoles = rootRoles.join(Roles_.usuariosList);
+        CriteriaQuery<Usuarios> cqq = cq.select(joinRoles);
+        
+        TypedQuery<Usuarios> q = getEntityManager().createQuery(cq);
+        try {
+            return  q.getResultList();
+       
         } catch (NoResultException ex) {
             return null;
         }
